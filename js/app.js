@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewTitle = document.getElementById('current-view-title');
 
     navItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', async () => {
             // Remove active from all
             navItems.forEach(nav => nav.classList.remove('active'));
             views.forEach(view => view.classList.remove('active'));
@@ -72,11 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Trigger specific view initialization
             if (targetViewId === 'dashboard' && typeof initDashboard === 'function') {
-                initDashboard();
+                await initDashboard();
             } else if (targetViewId === 'table' && typeof initTable === 'function') {
-                initTable();
+                await initTable();
             } else if (targetViewId === 'analytics' && typeof initAnalytics === 'function') {
-                initAnalytics();
+                await initAnalytics();
             } else if (targetViewId === 'reports' && typeof initReports === 'function') {
                 initReports();
             } else if (targetViewId === 'settings' && typeof initSettings === 'function') {

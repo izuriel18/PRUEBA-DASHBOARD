@@ -3,7 +3,7 @@
 let dashboardCharts = [];
 let currentFilters = { dateRange: 'all', area: 'all', type: 'all' };
 
-function initDashboard() {
+async function initDashboard() {
     const dashboardView = document.getElementById('view-dashboard');
     const config = DataManager.getConfig();
     const areasOptions = config.areas.map(a => `<option value="${a}" ${currentFilters.area === a ? 'selected' : ''}>${a}</option>`).join('');
@@ -34,7 +34,7 @@ function initDashboard() {
         </div>
 
         <div class="kpi-grid" id="kpi-container">
-            <!-- KPIs Inyectados vía JS -->
+            <div style="padding: var(--space-5); text-align: center; color: var(--color-muted-text);">Cargando datos desde Supabase...</div>
         </div>
 
         <div class="analytics-grid">
@@ -59,25 +59,27 @@ function initDashboard() {
     `;
 
     // Bind Filter Events
-    document.getElementById('dash-filter-date').addEventListener('change', (e) => {
+    document.getElementById('dash-filter-date').addEventListener('change', async (e) => {
         currentFilters.dateRange = e.target.value;
-        updateDashboardView();
+        await updateDashboardView();
     });
-    document.getElementById('dash-filter-area').addEventListener('change', (e) => {
+    document.getElementById('dash-filter-area').addEventListener('change', async (e) => {
         currentFilters.area = e.target.value;
-        updateDashboardView();
+        await updateDashboardView();
     });
-    document.getElementById('dash-filter-type').addEventListener('change', (e) => {
+    document.getElementById('dash-filter-type').addEventListener('change', async (e) => {
         currentFilters.type = e.target.value;
-        updateDashboardView();
+        await updateDashboardView();
     });
 
-    updateDashboardView();
+    await updateDashboardView();
 }
 
-function updateDashboardView() {
-    const stats = DataManager.getStats(currentFilters);
+async function updateDashboardView() {
     const kpiContainer = document.getElementById('kpi-container');
+    kpiContainer.innerHTML = '<div style="padding: var(--space-5); text-align: center; color: var(--color-muted-text);">Actualizando...</div>';
+    
+    const stats = await DataManager.getStats(currentFilters);
 
     kpiContainer.innerHTML = `
         <div class="card">
@@ -125,15 +127,15 @@ function updateDashboardView() {
     `;
 
     lucide.createIcons();
-    renderDashboardCharts();
+    await renderDashboardCharts();
 }
 
-function renderDashboardCharts() {
+async function renderDashboardCharts() {
     // Clear old charts
     dashboardCharts.forEach(c => c.destroy());
     dashboardCharts = [];
 
-    const reports = DataManager.getFilteredReports(currentFilters);
+    const reports = await DataManager.getFilteredReports(currentFilters);
     
     // Setup Colors based on theme
     const isDark = document.body.classList.contains('dark-theme');

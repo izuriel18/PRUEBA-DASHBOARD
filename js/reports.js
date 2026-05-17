@@ -76,9 +76,14 @@ function initReports() {
 
     lucide.createIcons();
 
-    document.getElementById('report-form').addEventListener('submit', (e) => {
+    document.getElementById('report-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        const btnSubmit = e.target.querySelector('button[type="submit"]');
+        const originalText = btnSubmit.innerHTML;
+        btnSubmit.innerHTML = "Guardando...";
+        btnSubmit.disabled = true;
+
         const report = {
             type: document.getElementById('report-type').value,
             risk: document.getElementById('report-risk').value,
@@ -90,16 +95,22 @@ function initReports() {
             resolution: ''
         };
 
-        DataManager.saveReport(report);
+        const result = await DataManager.saveReport(report);
         
-        e.target.reset();
-        
-        const toast = document.getElementById('toast-success');
-        toast.style.display = 'block';
-        lucide.createIcons();
-        
-        setTimeout(() => {
-            toast.style.display = 'none';
-        }, 3000);
+        btnSubmit.innerHTML = originalText;
+        btnSubmit.disabled = false;
+
+        if(result) {
+            e.target.reset();
+            const toast = document.getElementById('toast-success');
+            toast.style.display = 'block';
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        } else {
+            alert("Error guardando en Supabase. Revisa la consola.");
+        }
     });
 }

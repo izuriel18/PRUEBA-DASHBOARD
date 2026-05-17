@@ -2,7 +2,7 @@
 
 let currentTableData = [];
 
-function initTable() {
+async function initTable() {
     const view = document.getElementById('view-table');
     
     view.innerHTML = `
@@ -79,7 +79,7 @@ function initTable() {
     document.getElementById('filter-status').addEventListener('change', renderTable);
     document.getElementById('filter-risk').addEventListener('change', renderTable);
 
-    renderTable();
+    await renderTable();
 }
 
 function getRiskBadge(risk) {
@@ -101,8 +101,11 @@ function getStatusBadge(status) {
     }
 }
 
-function renderTable() {
-    const allReports = DataManager.getReports();
+async function renderTable() {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: var(--space-5); color: var(--color-muted-text);">Cargando datos...</td></tr>`;
+
+    const allReports = await DataManager.getReports();
     const searchTerm = document.getElementById('table-search').value.toLowerCase();
     const statusFilter = document.getElementById('filter-status').value;
     const riskFilter = document.getElementById('filter-risk').value;
@@ -117,7 +120,6 @@ function renderTable() {
         return matchesSearch && matchesStatus && matchesRisk;
     });
 
-    const tbody = document.getElementById('table-body');
     tbody.innerHTML = '';
 
     if (currentTableData.length === 0) {
@@ -203,13 +205,13 @@ function viewDetails(id) {
         </div>
     `;
 
-    document.getElementById('btn-update-status').onclick = () => {
+    document.getElementById('btn-update-status').onclick = async () => {
         const newStatus = document.getElementById('modal-status-select').value;
         if (newStatus !== report.status) {
-            DataManager.updateReportStatus(report.id, newStatus);
-            renderTable();
+            await DataManager.updateReportStatus(report.id, newStatus);
+            await renderTable();
             if(document.getElementById('view-dashboard').classList.contains('active') && typeof renderDashboardCharts === 'function') {
-                renderDashboardCharts();
+                await updateDashboardView();
             }
         }
         closeModal();

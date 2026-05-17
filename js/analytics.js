@@ -2,7 +2,7 @@
 
 let analyticsCharts = [];
 
-function initAnalytics() {
+async function initAnalytics() {
     const view = document.getElementById('view-analytics');
     
     view.innerHTML = `
@@ -11,7 +11,8 @@ function initAnalytics() {
                 <span class="card-title">Distribución de Tipos y Riesgos</span>
                 <i data-lucide="pie-chart" class="card-icon"></i>
             </div>
-            <div class="analytics-grid">
+            <div id="analytics-loading" style="padding: var(--space-5); text-align: center; color: var(--color-muted-text);">Cargando analíticas desde Supabase...</div>
+            <div class="analytics-grid" id="analytics-content1" style="display:none;">
                 <div class="chart-container">
                     <canvas id="typeChart"></canvas>
                 </div>
@@ -21,7 +22,7 @@ function initAnalytics() {
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="analytics-content2" style="display:none;">
             <div class="card-header">
                 <span class="card-title">Top Categorías de Hallazgos (Pareto)</span>
                 <i data-lucide="bar-chart-horizontal" class="card-icon"></i>
@@ -33,14 +34,21 @@ function initAnalytics() {
     `;
 
     lucide.createIcons();
-    renderAnalyticsCharts();
+    await renderAnalyticsCharts();
 }
 
-function renderAnalyticsCharts() {
+async function renderAnalyticsCharts() {
     analyticsCharts.forEach(c => c.destroy());
     analyticsCharts = [];
 
-    const reports = DataManager.getReports();
+    const reports = await DataManager.getReports();
+    const loading = document.getElementById('analytics-loading');
+    const content1 = document.getElementById('analytics-content1');
+    const content2 = document.getElementById('analytics-content2');
+
+    if(loading) loading.style.display = 'none';
+    if(content1) content1.style.display = 'grid';
+    if(content2) content2.style.display = 'block';
     if(reports.length === 0) return;
 
     const isDark = document.body.classList.contains('dark-theme');
