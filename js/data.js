@@ -34,8 +34,37 @@ const DataManager = {
     },
 
     // Statistics helpers
-    getStats() {
-        const reports = this.getReports();
+    getFilteredReports(filters = {}) {
+        let reports = this.getReports();
+        
+        if (filters.area && filters.area !== 'all') {
+            reports = reports.filter(r => r.area === filters.area);
+        }
+        
+        if (filters.type && filters.type !== 'all') {
+            reports = reports.filter(r => r.type === filters.type);
+        }
+        
+        if (filters.dateRange && filters.dateRange !== 'all') {
+            const now = new Date();
+            let limitDate = new Date();
+            
+            if (filters.dateRange === '7days') {
+                limitDate.setDate(now.getDate() - 7);
+            } else if (filters.dateRange === '30days') {
+                limitDate.setDate(now.getDate() - 30);
+            } else if (filters.dateRange === '1year') {
+                limitDate.setFullYear(now.getFullYear() - 1);
+            }
+            
+            reports = reports.filter(r => new Date(r.date) >= limitDate);
+        }
+        
+        return reports;
+    },
+
+    getStats(filters = {}) {
+        const reports = this.getFilteredReports(filters);
         const now = new Date();
         const currentMonth = now.getMonth();
         const currentYear = now.getFullYear();
