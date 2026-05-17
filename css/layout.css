@@ -1,0 +1,272 @@
+/* ==========================================================================
+   Layout - Safety Ops Dashboard
+   ========================================================================== */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar Navigation
+   -------------------------------------------------------------------------- */
+.sidebar {
+    width: 280px;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-base), transform var(--transition-base);
+    z-index: 50;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-header {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-container {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: var(--radius-md);
+    margin-right: var(--space-3);
+}
+
+.logo-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity var(--transition-fast);
+}
+
+.collapsed .logo-text {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.logo-text h1 {
+    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.logo-text span {
+    font-size: 0.75rem;
+    color: var(--color-muted-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: 10;
+}
+
+.sidebar-toggle:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.collapsed .sidebar-toggle .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.nav-links {
+    flex: 1;
+    padding: var(--space-4) var(--space-3);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--color-muted-text);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.nav-item i {
+    min-width: 24px;
+    margin-right: var(--space-3);
+}
+
+.nav-item span {
+    font-weight: 500;
+    transition: opacity var(--transition-fast);
+}
+
+.collapsed .nav-item span {
+    opacity: 0;
+}
+
+.nav-item:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-foreground);
+}
+
+.nav-item.active {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.nav-item.active i {
+    color: var(--color-on-primary);
+}
+
+.sidebar-footer {
+    padding: var(--space-4) var(--space-3);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+/* --------------------------------------------------------------------------
+   Main Content Area
+   -------------------------------------------------------------------------- */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-background);
+}
+
+.topbar {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 40;
+}
+
+.view-title {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-background);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+}
+
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-safe);
+    animation: pulse-dot 2s infinite;
+}
+
+.status-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-safe);
+    font-family: var(--font-mono);
+}
+
+.views-container {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--space-6);
+}
+
+.view {
+    display: none;
+    animation: slideUp var(--transition-base) forwards;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Design
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .sidebar { width: 80px; }
+    .logo-text, .nav-item span { opacity: 0; display: none; }
+    .sidebar-toggle { display: none; }
+}
+
+@media (max-width: 768px) {
+    .app-container { flex-direction: column; }
+    .sidebar { 
+        width: 100%; 
+        height: auto; 
+        flex-direction: row; 
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+    }
+    .sidebar-header, .sidebar-footer { display: none; }
+    .nav-links { flex-direction: row; padding: var(--space-2); justify-content: space-around; overflow-y: visible; }
+    .nav-item { padding: var(--space-2); }
+    .nav-item i { margin-right: 0; }
+    .main-content { margin-bottom: 60px; height: calc(100vh - 60px); }
+    .topbar { padding: 0 var(--space-4); }
+    .views-container { padding: var(--space-4); }
+}

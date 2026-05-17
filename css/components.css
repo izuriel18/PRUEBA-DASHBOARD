@@ -1,0 +1,361 @@
+/* ==========================================================================
+   Components - Safety Ops Dashboard
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Cards
+   -------------------------------------------------------------------------- */
+.card {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-base), transform var(--transition-fast);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.card-title {
+    font-size: 1rem;
+    color: var(--color-muted-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.card-icon {
+    color: var(--color-primary);
+    background-color: var(--color-muted);
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+}
+
+/* --------------------------------------------------------------------------
+   Massive KPIs (Exaggerated Minimalism)
+   -------------------------------------------------------------------------- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.kpi-value {
+    font-family: var(--font-mono);
+    /* Exaggerated size for KPIs */
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: var(--color-foreground);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+}
+
+.kpi-value.danger { color: var(--color-danger); }
+.kpi-value.warning { color: var(--color-warning); }
+.kpi-value.safe { color: var(--color-safe); }
+.kpi-value.accent { color: var(--color-accent); }
+
+.kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.kpi-trend.positive { color: var(--color-safe); }
+.kpi-trend.negative { color: var(--color-danger); }
+.kpi-trend.neutral { color: var(--color-muted-text); }
+
+/* --------------------------------------------------------------------------
+   Badges (No color-only indicators!)
+   -------------------------------------------------------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid transparent;
+}
+
+.badge i {
+    width: 14px;
+    height: 14px;
+}
+
+/* Specific Badge Variants */
+.badge-danger {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: var(--color-danger);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+.badge-warning {
+    background-color: rgba(217, 119, 6, 0.1);
+    color: var(--color-warning);
+    border-color: rgba(217, 119, 6, 0.2);
+}
+
+.badge-safe {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: var(--color-safe);
+    border-color: rgba(22, 163, 74, 0.2);
+}
+
+.badge-neutral {
+    background-color: var(--color-muted);
+    color: var(--color-muted-text);
+    border-color: var(--color-border);
+}
+
+.badge-accent {
+    background-color: rgba(234, 88, 12, 0.1);
+    color: var(--color-accent);
+    border-color: rgba(234, 88, 12, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+    background-color: var(--color-surface);
+    color: var(--color-foreground);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-icon {
+    padding: var(--space-2);
+    border-radius: var(--radius-full);
+}
+
+/* --------------------------------------------------------------------------
+   Forms & Inputs
+   -------------------------------------------------------------------------- */
+.form-group {
+    margin-bottom: var(--space-4);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--space-3);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-foreground);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* --------------------------------------------------------------------------
+   Data Tables
+   -------------------------------------------------------------------------- */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: var(--color-background);
+    padding: var(--space-3) var(--space-4);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted-text);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.data-table td {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.875rem;
+}
+
+.data-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--color-surface-hover);
+}
+
+/* Code-like font for IDs or specific metrics in tables */
+.data-table .mono-data {
+    font-family: var(--font-mono);
+    font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Action Bar (Filters/Search)
+   -------------------------------------------------------------------------- */
+.action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-box i {
+    position: absolute;
+    left: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted-text);
+}
+
+.search-box input {
+    padding-left: var(--space-8);
+}
+
+.filter-group {
+    display: flex;
+    gap: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   Modal / Slide-over
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-base);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(20px) scale(0.95);
+    transition: transform var(--transition-base);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal-header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: var(--space-5);
+}
+
+.modal-footer {
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+}

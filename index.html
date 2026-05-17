@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Ops - Seguridad Industrial</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/charts.css">
+    
+    <!-- Scripts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <i data-lucide="shield-alert" class="logo-icon"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>S-OPS</h1>
+                    <span>Safety Ops Panel</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                    <i data-lucide="panel-left-close" class="toggle-icon"></i>
+                </button>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="nav-item active" data-view="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Panel Principal</span>
+                </li>
+                <li class="nav-item" data-view="reports">
+                    <i data-lucide="clipboard-plus"></i>
+                    <span>Nuevo Registro</span>
+                </li>
+                <li class="nav-item" data-view="table">
+                    <i data-lucide="list-todo"></i>
+                    <span>Hallazgos en Vivo</span>
+                </li>
+                <li class="nav-item" data-view="analytics">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span>Análisis Profundo</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <li class="nav-item theme-toggle" id="theme-toggle">
+                    <i data-lucide="moon"></i>
+                    <span>Modo Oscuro</span>
+                </li>
+                <li class="nav-item" data-view="settings">
+                    <i data-lucide="settings"></i>
+                    <span>Configuración</span>
+                </li>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h2 id="current-view-title" class="view-title">Panel Principal</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="status-indicator">
+                        <span class="pulse-dot green"></span>
+                        <span class="status-text">Sistema En Línea</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="views-container">
+                <!-- Vistas se inyectarán/mostrarán aquí -->
+                <section id="view-dashboard" class="view active">
+                    <!-- Dashboard Content -->
+                </section>
+                
+                <section id="view-reports" class="view">
+                    <!-- Reports Form Content -->
+                </section>
+                
+                <section id="view-table" class="view">
+                    <!-- Table Content -->
+                </section>
+                
+                <section id="view-analytics" class="view">
+                    <!-- Analytics Content -->
+                </section>
+                
+                <section id="view-settings" class="view">
+                    <!-- Settings Content -->
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/demo-data.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
